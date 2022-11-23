@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <windows.h>
 using namespace std;
 
 // ======= Variaveis globais =======
@@ -25,16 +26,16 @@ int logado;
 
 //====== FUNCOES DO LOGIN ========
 //================================
-void forgot()
+void esqueceu()
 // Função para recuperar senha esquecida
 {
 	int ch;
 	system("cls");
-	cout << "ESQUECEU? Nos estamos aqui para te ajudar\n";
+	cout << "ESQUECEU? Nos estamos aqui para te ajudar\n\n";
 	cout << "[1] Procurar conta pelo nome de usuario" << endl;
 	cout << "[2] Procurar conta pela senha" << endl;
-	cout << "[3] Menu principal" << endl;
-	cout << "Digite sua opção:";
+	cout << "[3] Menu principal\n" << endl;
+	cout << "Digite sua opção >> ";
 	cin >> ch;
 	switch (ch)
 	{
@@ -42,7 +43,7 @@ void forgot()
 	{
 		int count = 0;
 		string searchuser, su, sp;
-		cout << "\nDigite seu nome de usiario :";
+		cout << "\nDigite seu nome de usiario >> ";
 		cin >> searchuser;
 
 		ifstream searchu("database.txt");
@@ -113,11 +114,11 @@ void forgot()
 	case 3:
 	{
 		cin.get();
-		//  main();
+        break;
 	}
 	default:
 		cout << "Opção invalida, tente novamente" << endl;
-		forgot();
+		esqueceu();
 	}
 }
 //==============================
@@ -128,13 +129,13 @@ void login()
 
 	string user, pass, u, p;
 	system("cls");
-	cout << "Digite seu login" << endl;
-	cout << "USUARIO : \n";
+	cout << "===================\n";
+	cout << "  Digite seu login" << endl;
+	cout << "===================\n";
+	cout << "  USUARIO >> ";
 	cin >> user;
-	cout << "\n\nSENHA : \n";
-	system("color 23");
+	cout << "\n\n  SENHA >> ";
 	cin >> pass;
-	system("color 30");
 	ifstream input("database.txt");
 	while (input >> u >> p)
 	{
@@ -148,7 +149,7 @@ void login()
 	input.close();
 	if (count == 1)
 	{
-		cout << "\n<LOGADO COM SUCESSO>\nOla  " << user << "!\n";
+		cout << "\n\n       <LOGADO COM SUCESSO>\n\n        Ola " << user << "!\n";
 		cin.get();
 		cin.get();
 		logado = 1;
@@ -156,7 +157,6 @@ void login()
 	}
 	else
 	{
-		cout << "\nLOGIN INVALIDO \nPor favor, verifique seu nome de usuario ou senha\n";
 		logado = 0;
 		//  main();
 	}
@@ -177,7 +177,8 @@ void registr()
 	reg << reguser << ' ' << regpass << endl;
 	system("cls");
 	cout << "\nCADASTRADO COM SUCESSO\n";
-	//  main();
+	Sleep(2000);
+//	  main();
 }
 //===================================
 //======FUNCOES FUNCIONARIOS========
@@ -192,15 +193,23 @@ void openFile()
 		while (getline(myfile, line))
 		{
 			EmpID[x] = line.substr(0, 3);
-			EmpName[x] = line.substr(3, 1 - 3);
-			EmpCargo[x] = line.substr(0, 0);
-			EmpSalario[x] = line.substr(0, 0);
+			EmpCargo[x] = line.substr(3, 18);
+			if(EmpCargo[x] == "programador junior")
+            {
+                folhaPagamento += 3500;
+            }
+            if(EmpCargo[x] == "programador pleno ")
+            {
+                folhaPagamento += 5500;
+            }
+            if(EmpCargo[x] == "programador senior")
+            {
+                folhaPagamento += 8000;
+            }
+			EmpSalario[x] = line.substr(21, 8);
+			EmpName[x] = line.substr(29, 25);
 			x++;
 		}
-	}
-	else
-	{
-		cout << "Impossivel abrir o arquivo txt" << endl;
 	}
 }
 //=================================
@@ -254,7 +263,7 @@ void cadastrarF()
 			else
 			{
 				cout << "Digite um cargo valido! ";
-				sleep(1);
+				Sleep(2000);
 				cadastrarF();
 			}
 
@@ -286,6 +295,8 @@ void alterarF(string buscar)
 			EmpName[x] = name;
 
 			cout << "Alterado com sucesso!" << endl;
+			Sleep(2000);
+			system("cls");
 			break;
 		}
 	}
@@ -323,7 +334,7 @@ void excluirF(string buscar)
 			EmpID[x] = "";
 			EmpCargo[x] = "";
 			EmpSalario[x] = "";
-			
+
 			cout << "Funcionario excluido com sucesso!" << endl;
 			break;
 		}
@@ -342,7 +353,7 @@ void buscarF(string buscar)
 	system("cls");
 	cout << "		Buscar funcionarios" << endl;
 	cout << "==================================================================" << endl;
-	cout << " ID |       NOME       |       FUNÇÃO      |     SALARIO" << endl;
+	cout << " ID |       FUNÇÃO          |  SALARIO  |    COLABORADOR   " << endl;
 	cout << "------------------------------------------------------------------\n";
 	int contador = 0;
 
@@ -352,21 +363,9 @@ void buscarF(string buscar)
 		{
 			contador++;
 			cout << EmpID[x];
-			cout << "    " << EmpName[x];
-			if (EmpTamN[x] < 15)
-			{
-				system("color 70");
-				int valorDeTam;
-				valorDeTam = EmpTamN[x];
-				valorDeTam = 15 - valorDeTam;
-				for (int i = 0; i < valorDeTam; i++)
-				{
-					cout << " ";
-				}
-			}
 			cout << "   " << EmpCargo[x];
-			cout << "      " << EmpSalario[x] << endl;
-			system("color 30");
+			cout << "      " << EmpSalario[x];
+			cout << "    " << EmpName[x] << endl;
 			break;
 		}
 	}
@@ -382,7 +381,7 @@ void verTodosF()
 	int contador = 0;
 	cout << "		todos os funcionarios" << endl;
 	cout << "==================================================================" << endl;
-	cout << " ID |       NOME       |       FUNÇÃO      |     SALARIO" << endl;
+	cout << " ID |       FUNÇÃO          |  SALARIO  |    COLABORADOR   " << endl;
 	cout << "------------------------------------------------------------------\n";
 	for (int x = 0; x < maxrow; x++)
 	{
@@ -404,26 +403,20 @@ void verTodosF()
 				funcao = "programador senior";
 				salario = "R$ 8,000 ";
 			}
+			else
+            {
+
+            }
 				cout << EmpID[x] ;
-				cout << "    " << EmpName[x];
-			if (EmpTamN[x] < 15)
-			{
-				system("color 70");
-				int valorDeTam;
-				valorDeTam = EmpTamN[x];
-				valorDeTam = 15 - valorDeTam;
-				for (int i = 0; i < valorDeTam; i++)
-				{
-					cout << " ";
-				}
-			}
-			cout << "   " << EmpCargo[x];
-			cout << "      " << EmpSalario[x] << endl;
-			system("color 30");
+                cout << "   " << EmpCargo[x];
+                cout << "      " << EmpSalario[x];
+                cout << "    " << EmpName[x] << endl;
+
 		}
 	}
 	if (contador == 0)
 	{
+
 		cout << "nenhum funcionario encontrado! " << endl;
 	}
 	cout << "------------------------------------------------------------------" << endl;
@@ -443,10 +436,10 @@ void salvarF()
 		}
 		else
 		{
-			myfile << EmpID[x] << " ";
-			myfile << EmpName[x] << " ";
-			myfile << EmpCargo[x] << " ";
-			myfile << EmpSalario[x] << endl;
+			myfile << EmpID[x];
+			myfile << EmpCargo[x];
+            myfile << EmpSalario[x];
+            myfile << EmpName[x] << endl;
 		}
 	}
 myfile.close();
@@ -492,14 +485,11 @@ void openFileC()
 		while (getline(myfileC, line))
 		{
 			EmpCPF[x] = line.substr(0, 11);
-			EmpNameC[x] = line.substr(11, 1 - 4);
-			EmpTel[x] = line.substr(0, 0);
+			EmpTel[x] = line.substr(11, 13);
+			EmpNameC[x] = line.substr(24, 20);
+
 			x++;
 		}
-	}
-	else
-	{
-		cout << "Impossivel abrir o arquivo txt" << endl;
 	}
 }
 
@@ -524,6 +514,8 @@ void alterarC(string buscar)
 			EmpNameC[x] = name;
 
 			cout << "Alterado com sucesso!" << endl;
+			Sleep(2000);
+			system("cls");
 			break;
 		}
 	}
@@ -577,7 +569,6 @@ void buscarC(string buscar)
 		if (EmpCPF[x] == buscar)
 		{
 			contador++;
-			system("color 70");
 			cout << " " << contador;
 			if (contador >= 10)
 			{
@@ -590,7 +581,7 @@ void buscarC(string buscar)
 			cout << EmpCPF[x];
 			cout << "       " << EmpTel[x];
 			cout << "        " << EmpNameC[x] << endl;
-			system("color 30");
+
 			break;
 		}
 	}
@@ -614,7 +605,6 @@ void verTodosC()
 		{
 			contador++;
 			espace = '\t';
-			system("color 70");
 			cout << " " << contador;
 			if (contador >= 10)
 			{
@@ -627,7 +617,6 @@ void verTodosC()
 			cout << EmpCPF[x];
 			cout << "       " << EmpTel[x];
 			cout << "        " << EmpNameC[x] << endl;
-			system("color 30");
 		}
 	}
 
@@ -663,7 +652,7 @@ void salvarC()
 // ========= codigo principal ==========
 int main()
 {
-	system("color 30");
+    setlocale(LC_ALL, "Portuguese");
 	std::cout << "MENU \n";
 	string empID;
 	system("cls");
@@ -672,22 +661,21 @@ int main()
 	int choice;
 	string tab = "\t";
 	string cifrao = " R$ ";
+	system("color 03");
 
 	// =========== Login ===============
 	cout << "========================\n";
-	system("color 70");
 	cout << "      START INVEST  \n";
-	system("color 30");
 	cout << "========================\n";
 	cout << "========================\n";
-	cout << "LOGIN  |  CADASTRAR-SE    \n";
+	cout << " LOGIN  |  CADASTRAR-SE    \n";
 	cout << "========================\n\n";
-	cout << "[1] LOGIN" << endl;
-	cout << "[2] CADASTRAR-SE" << endl;
-	cout << "[3] ESQUECEU A SENHA?" << endl;
-	cout << "[4] SAIR" << endl;
+	cout << " [1] LOGIN" << endl;
+	cout << " [2] CADASTRAR-SE" << endl;
+	cout << " [3] ESQUECEU A SENHA?" << endl;
+	cout << " [4] SAIR" << endl;
 	cout << "\n";
-	cout << "Escolha uma opcao >> ";
+	cout << " Escolha uma opcao >> ";
 	cin >> choice;
 	cout << endl;
 
@@ -696,13 +684,12 @@ int main()
 	case 1:
 		login();
 		system("cls");
-
 		break;
 	case 2:
 		registr();
 		break;
 	case 3:
-		forgot();
+		esqueceu();
 		system("cls");
 		main();
 		break;
@@ -711,10 +698,10 @@ int main()
 		break;
 	default:
 		system("cls");
-		system("color 40");
-		cout << "Opção invalida, tente novamente..\n"
-			 << endl;
-		sleep(2);
+	    system("color 04");
+		cout << "\n     OPÇÃO INVALIDA \n     Digite uma opçao valida!";
+		Sleep(2000);
+		system("color 03");
 		main();
 	}
 
@@ -722,9 +709,10 @@ int main()
 	if (logado == 0)
 	{
 		//se entrar com longin invalido
-		system("color 40");
-		cout << "login invalido... tente novamente\n";
-		sleep(2);
+		system("color 04");
+		cout << "\n\n       login invalido... tente novamente\n";
+		Sleep(2000);
+		system("color 03");
 		main();
 	}
 	if (logado == 1)
@@ -738,7 +726,7 @@ int main()
 		cout << "=================================\n";
 		cout << "         START INVEST   \n";
 		cout << "=================================\n\n";
-		cout << "[1] CLIENTES ";
+		cout << " [1] CLIENTES ";
 		cout << "   [2] COLABORADORES" << endl;
 		cout << "\n\n";
 		cout << " Escolha uma opcao >>  ";
@@ -759,14 +747,14 @@ int main()
 				cout << "=================================\n";
 				cout << "          CLIENTES   \n";
 				cout << "=================================\n\n";
-				cout << "[1] cadastrar Cliente" << endl;
-				cout << "[2] alterar clientes" << endl;
-				cout << "[3] excluir cliente " << endl;
-				cout << "[4] buscar cliente" << endl;
-				cout << "[5] ver todos " << endl;
-				cout << "[6] sair e salvar " << endl;
+				cout << " [1] cadastrar Cliente" << endl;
+				cout << " [2] alterar clientes" << endl;
+				cout << " [3] excluir cliente " << endl;
+				cout << " [4] buscar cliente" << endl;
+				cout << " [5] ver todos " << endl;
+				cout << " [6] sair e salvar " << endl;
 				cout << "==================================          by  kaique miranda © " << endl;
-				cout << "selecione sua opcao  >>  ";
+				cout << " selecione sua opcao  >>  ";
 				cin >> opcaoC;
 
 				switch (opcaoC)
@@ -802,16 +790,16 @@ int main()
 				case 6:
 					salvarC();
 					cout << "Saindo... salvando arquivo!" << endl;
-					sleep(2);
+					Sleep(2000);
 					system("cls");
 					break;
 
 				default:
 					system("cls");
-					system("color 40");
+					system("color 04");
 					cout << "Digite uma opcao valida!\n\n";
-					sleep(2);
-					system("color 30");
+					Sleep(2000);
+					system("color 03");
 					opcaoC = 1;
 					break;
 				}
@@ -831,15 +819,15 @@ int main()
 				cout << "      COLABORADORES   \n";
 				cout << "=================================\n\n";
 
-				cout << "[1] cadastrar funcionario " << endl;
-				cout << "[2] alterar funcionario" << endl;
-				cout << "[3] excluir funcionario" << endl;
-				cout << "[4] buscar funcionario" << endl;
-				cout << "[5] ver todos " << endl;
-				cout << "[6] folha de pagamento " << endl;
-				cout << "[7] salvar e sair" << endl;
+				cout << " [1] cadastrar funcionario " << endl;
+				cout << " [2] alterar funcionario" << endl;
+				cout << " [3] excluir funcionario" << endl;
+				cout << " [4] buscar funcionario" << endl;
+				cout << " [5] ver todos " << endl;
+				cout << " [6] folha de pagamento " << endl;
+				cout << " [7] salvar e sair" << endl;
 				cout << "==================================          by  kaique miranda © " << endl;
-				cout << "selecione sua opcao  >>  ";
+				cout << " selecione sua opcao  >>  ";
 				cin >> opcaoF;
 
 				switch (opcaoF)
@@ -897,31 +885,48 @@ int main()
 				case 7:
 					salvarF();
 					cout << "Saindo... salvando arquivo!" << endl;
-					sleep(2);
+					Sleep(2000);
 					system("cls");
 					break;
 
 				default:
 					system("cls");
-					system("color 40");
+					system("color 04");
 					cout << "Digite uma opcao valida!\n\n";
-					sleep(2);
-					system("color 30");
+					Sleep(2000);
+					system("color 03");
 					opcaoF = 1;
 					break;
 				}
 
 			} while (opcaoF != 7);
 			break;
+        default:
+            system("cls");
+            system("color 04");
+            cout << "\n\n       Digite uma opçao valida! ";
+            Sleep(2000);
+            system("color 03");
+            main();
+            break;
+
 		}
 	}
 	system("cls");
-	system("color 30");
-	cout << "\n\nobrigado por usar nosso sistema! \n\n";
-	cout << "-------------------------------\n";
-	cout << "          feito por \n \n ";
-	cout << "       Kaique Miranda ©\n";
+	cout << "\n\n=================================";
+	cout << "\n obrigado por usar nosso sistema! \n";
+	cout << "=================================\n\n";
 	cout << "---------------------------------\n";
+	cout << "          feito por \n \n ";
+	cout << "      Kaique Miranda      ©\n";
+	cout << "---------------------------------\n";
+	cout << "       Rodrigo costa       ©\n";
+	cout << "---------------------------------\n";
+	cout << "       Wellington Vinicius ©\n";
+	cout << "---------------------------------\n\n\n\n\n\n";
+
+
+
 
 	return 0;
 }

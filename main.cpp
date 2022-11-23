@@ -1,3 +1,4 @@
+
 #include <fstream>
 #include <iostream>
 #include <istream>
@@ -25,16 +26,16 @@ int logado;
 
 //====== FUNCOES DO LOGIN ========
 //================================
-void forgot()
+void esqueceu()
 // Função para recuperar senha esquecida
 {
 	int ch;
 	system("cls");
-	cout << "ESQUECEU? Nos estamos aqui para te ajudar\n";
+	cout << "ESQUECEU? Nos estamos aqui para te ajudar\n\n";
 	cout << "[1] Procurar conta pelo nome de usuario" << endl;
 	cout << "[2] Procurar conta pela senha" << endl;
-	cout << "[3] Menu principal" << endl;
-	cout << "Digite sua opção:";
+	cout << "[3] Menu principal\n" << endl;
+	cout << "Digite sua opção >> ";
 	cin >> ch;
 	switch (ch)
 	{
@@ -42,7 +43,7 @@ void forgot()
 	{
 		int count = 0;
 		string searchuser, su, sp;
-		cout << "\nDigite seu nome de usiario :";
+		cout << "\nDigite seu nome de usiario >> ";
 		cin >> searchuser;
 
 		ifstream searchu("database.txt");
@@ -113,11 +114,11 @@ void forgot()
 	case 3:
 	{
 		cin.get();
-		//  main();
+        break;
 	}
 	default:
 		cout << "Opção invalida, tente novamente" << endl;
-		forgot();
+		esqueceu();
 	}
 }
 //==============================
@@ -176,7 +177,8 @@ void registr()
 	reg << reguser << ' ' << regpass << endl;
 	system("cls");
 	cout << "\nCADASTRADO COM SUCESSO\n";
-	//  main();
+	Sleep(2000);
+//	  main();
 }
 //===================================
 //======FUNCOES FUNCIONARIOS========
@@ -198,11 +200,11 @@ void openFile()
             }
             if(EmpCargo[x] == "programador pleno ")
             {
-                folhaPagamento += 3500;
+                folhaPagamento += 5500;
             }
             if(EmpCargo[x] == "programador senior")
             {
-                folhaPagamento += 3500;
+                folhaPagamento += 8000;
             }
 			EmpSalario[x] = line.substr(21, 8);
 			EmpName[x] = line.substr(29, 25);
@@ -293,6 +295,8 @@ void alterarF(string buscar)
 			EmpName[x] = name;
 
 			cout << "Alterado com sucesso!" << endl;
+			Sleep(2000);
+			system("cls");
 			break;
 		}
 	}
@@ -359,19 +363,9 @@ void buscarF(string buscar)
 		{
 			contador++;
 			cout << EmpID[x];
-			cout << "    " << EmpName[x];
-			if (EmpTamN[x] < 15)
-			{
-				int valorDeTam;
-				valorDeTam = EmpTamN[x];
-				valorDeTam = 15 - valorDeTam;
-				for (int i = 0; i < valorDeTam; i++)
-				{
-					cout << " ";
-				}
-			}
 			cout << "   " << EmpCargo[x];
-			cout << "      " << EmpSalario[x] << endl;
+			cout << "      " << EmpSalario[x];
+			cout << "    " << EmpName[x] << endl;
 			break;
 		}
 	}
@@ -409,6 +403,10 @@ void verTodosF()
 				funcao = "programador senior";
 				salario = "R$ 8,000 ";
 			}
+			else
+            {
+
+            }
 				cout << EmpID[x] ;
                 cout << "   " << EmpCargo[x];
                 cout << "      " << EmpSalario[x];
@@ -418,6 +416,7 @@ void verTodosF()
 	}
 	if (contador == 0)
 	{
+
 		cout << "nenhum funcionario encontrado! " << endl;
 	}
 	cout << "------------------------------------------------------------------" << endl;
@@ -515,6 +514,8 @@ void alterarC(string buscar)
 			EmpNameC[x] = name;
 
 			cout << "Alterado com sucesso!" << endl;
+			Sleep(2000);
+			system("cls");
 			break;
 		}
 	}
@@ -667,14 +668,14 @@ int main()
 	cout << "      START INVEST  \n";
 	cout << "========================\n";
 	cout << "========================\n";
-	cout << "LOGIN  |  CADASTRAR-SE    \n";
+	cout << " LOGIN  |  CADASTRAR-SE    \n";
 	cout << "========================\n\n";
-	cout << "[1] LOGIN" << endl;
-	cout << "[2] CADASTRAR-SE" << endl;
-	cout << "[3] ESQUECEU A SENHA?" << endl;
-	cout << "[4] SAIR" << endl;
+	cout << " [1] LOGIN" << endl;
+	cout << " [2] CADASTRAR-SE" << endl;
+	cout << " [3] ESQUECEU A SENHA?" << endl;
+	cout << " [4] SAIR" << endl;
 	cout << "\n";
-	cout << "Escolha uma opcao >> ";
+	cout << " Escolha uma opcao >> ";
 	cin >> choice;
 	cout << endl;
 
@@ -688,7 +689,7 @@ int main()
 		registr();
 		break;
 	case 3:
-		forgot();
+		esqueceu();
 		system("cls");
 		main();
 		break;
@@ -725,7 +726,7 @@ int main()
 		cout << "=================================\n";
 		cout << "         START INVEST   \n";
 		cout << "=================================\n\n";
-		cout << "[1] CLIENTES ";
+		cout << " [1] CLIENTES ";
 		cout << "   [2] COLABORADORES" << endl;
 		cout << "\n\n";
 		cout << " Escolha uma opcao >>  ";
@@ -746,14 +747,14 @@ int main()
 				cout << "=================================\n";
 				cout << "          CLIENTES   \n";
 				cout << "=================================\n\n";
-				cout << "[1] cadastrar Cliente" << endl;
-				cout << "[2] alterar clientes" << endl;
-				cout << "[3] excluir cliente " << endl;
-				cout << "[4] buscar cliente" << endl;
-				cout << "[5] ver todos " << endl;
-				cout << "[6] sair e salvar " << endl;
+				cout << " [1] cadastrar Cliente" << endl;
+				cout << " [2] alterar clientes" << endl;
+				cout << " [3] excluir cliente " << endl;
+				cout << " [4] buscar cliente" << endl;
+				cout << " [5] ver todos " << endl;
+				cout << " [6] sair e salvar " << endl;
 				cout << "==================================          by  kaique miranda © " << endl;
-				cout << "selecione sua opcao  >>  ";
+				cout << " selecione sua opcao  >>  ";
 				cin >> opcaoC;
 
 				switch (opcaoC)
@@ -818,15 +819,15 @@ int main()
 				cout << "      COLABORADORES   \n";
 				cout << "=================================\n\n";
 
-				cout << "[1] cadastrar funcionario " << endl;
-				cout << "[2] alterar funcionario" << endl;
-				cout << "[3] excluir funcionario" << endl;
-				cout << "[4] buscar funcionario" << endl;
-				cout << "[5] ver todos " << endl;
-				cout << "[6] folha de pagamento " << endl;
-				cout << "[7] salvar e sair" << endl;
+				cout << " [1] cadastrar funcionario " << endl;
+				cout << " [2] alterar funcionario" << endl;
+				cout << " [3] excluir funcionario" << endl;
+				cout << " [4] buscar funcionario" << endl;
+				cout << " [5] ver todos " << endl;
+				cout << " [6] folha de pagamento " << endl;
+				cout << " [7] salvar e sair" << endl;
 				cout << "==================================          by  kaique miranda © " << endl;
-				cout << "selecione sua opcao  >>  ";
+				cout << " selecione sua opcao  >>  ";
 				cin >> opcaoF;
 
 				switch (opcaoF)
@@ -900,14 +901,32 @@ int main()
 
 			} while (opcaoF != 7);
 			break;
+        default:
+            system("cls");
+            system("color 04");
+            cout << "\n\n       Digite uma opçao valida! ";
+            Sleep(2000);
+            system("color 03");
+            main();
+            break;
+
 		}
 	}
 	system("cls");
-	cout << "\n\nobrigado por usar nosso sistema! \n\n";
-	cout << "-------------------------------\n";
-	cout << "          feito por \n \n ";
-	cout << "       Kaique Miranda ©\n";
+	cout << "\n\n=================================";
+	cout << "\n obrigado por usar nosso sistema! \n";
+	cout << "=================================\n\n";
 	cout << "---------------------------------\n";
+	cout << "          feito por \n \n ";
+	cout << "      Kaique Miranda      ©\n";
+	cout << "---------------------------------\n";
+	cout << "       Rodrigo costa       ©\n";
+	cout << "---------------------------------\n";
+	cout << "       Wellington Vinicius ©\n";
+	cout << "---------------------------------\n\n\n\n\n\n";
+
+
+
 
 	return 0;
 }
